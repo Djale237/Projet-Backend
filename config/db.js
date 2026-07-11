@@ -4,13 +4,13 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 // Importation du modèle de produit
 const Produit = require('../models/Produit');
 
-// Tableau de données initiales
+// Données de test qui respectent STRICTEMENT les enums de ton schéma
 const seedProduits = [
   {
     nom: "Maïs", 
     categorie: "Semences",
     prixUnitaire: 1500, 
-    canton: "Maroua 1er", // Mis à jour avec une valeur standard d'enum. Si ton enum attend "Maroua I", "Maroua II" ou "Pitoa", écris-le ici.
+    canton: "Mororo", // Corrigé : 'Mororo' fait bien partie de la liste autorisée !
     description: "Semences à haut rendement adaptées à la saison locale.",
     stock: 50
   }
@@ -20,7 +20,7 @@ const connectDB = async () => {
   try {
     let dbUrl = process.env.MONGODB_URI;
 
-    // Utilisation de la mémoire locale si le réseau coupe
+    // Si Atlas est déconnecté, on utilise la mémoire
     if (!dbUrl || dbUrl.includes('mongodb.net')) {
       console.log('🔄 Connexion internet défaillante. Bascule sur MongoDB en mémoire...');
       const mongoServer = await MongoMemoryServer.create();
